@@ -1,5 +1,7 @@
 # write your code here!
-conicoins = int(input())
-print(f'I have {conicoins} conicoins')
-print(f'{conicoins} conicoins cost {conicoins * 100} dollars.')
-print('I am rich! Yippee!')
+conicoins_amount = float(input())
+print(f'''I will get {conicoins_amount * 2.98} RUB from the sale of {conicoins_amount} conicoins.
+I will get {conicoins_amount * 0.82} ARS from the sale of {conicoins_amount} conicoins.
+I will get {conicoins_amount * 0.17} HNL from the sale of {conicoins_amount} conicoins.
+I will get {conicoins_amount * 1.9622} AUD from the sale of {conicoins_amount} conicoins.
+I will get {conicoins_amount * 0.208} MAD from the sale of {conicoins_amount} conicoins.''')
