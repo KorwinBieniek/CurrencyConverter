@@ -1,7 +1,33 @@
 # write your code here!
-conicoins_amount = float(input())
-print(f'''I will get {conicoins_amount * 2.98} RUB from the sale of {conicoins_amount} conicoins.
-I will get {conicoins_amount * 0.82} ARS from the sale of {conicoins_amount} conicoins.
-I will get {conicoins_amount * 0.17} HNL from the sale of {conicoins_amount} conicoins.
-I will get {conicoins_amount * 1.9622} AUD from the sale of {conicoins_amount} conicoins.
-I will get {conicoins_amount * 0.208} MAD from the sale of {conicoins_amount} conicoins.''')
+import requests
+import json
+
+currencies = {}
+# adding usd and eur to cache dictionary
+for i in ['usd', 'eur']:
+    r = requests.get("http://www.floatrates.com/daily/" + i + ".json")
+    currencies[i] = json.loads(r.text)
+
+origin_currency = input().lower()
+
+
+while True:
+    target_currency = input().lower()
+    if target_currency == "":
+        exit()
+    amount = float(input())
+    print('Checking the cache... ')
+    if target_currency in currencies.keys():
+        print('Oh! It is in the cache!')
+        exchanged = amount / currencies[target_currency][origin_currency]['rate']
+        new_currency = target_currency.upper()
+        print(f'You received {round(exchanged,2)} {new_currency}.')
+
+    else:
+        print('Sorry, but it is not in the cache!')
+        r = requests.get("http://www.floatrates.com/daily/" + target_currency + ".json")
+        fx = json.loads(r.text)
+        exchanged = amount / fx[origin_currency]['rate']
+        new_currency = target_currency.upper()
+        print(f"You received {round(exchanged,2)} {new_currency}.")
+        currencies[target_currency] = fx
